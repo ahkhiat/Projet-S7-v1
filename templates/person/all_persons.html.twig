@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des personnes{% endblock %}
+
+{% block body %}
+
+<h1>Liste des personnes</h1>
+<table class="table">
+
+{% for person in persons %}
+
+<tr>
+<td> {{ person.getNom() }}  </td>
+<td> {{ person.getPrenom() }} </td>
+<td> {{ person.getVille() }} </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{# {{ path('person_show', {'id' : person.id})}} #}
+
+{% endblock %}
