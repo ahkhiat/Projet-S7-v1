@@ -6,32 +6,30 @@
 
 <h1>Fiche personnelle EDIT</h1>
 
-
-<table class="table w-75 mx-auto table-bordered">
-    <tr>
-        <TH>Nom </TH>
-        <TH>Prénom </TH>
-        <TH>Ville</TH>
-        <TH>Age</TH>
-        <TH>Date de naissance</TH>
-    </tr>
-
-
-    <form>
+<form action="{{ path('person_edit_request', {'id': person.id}) }}" method="POST">
+    <table class="table w-75 mx-auto table-bordered">
         <tr>
-            <td> <input type="text" class="form-control" id="nom" value="{{ person.nom }}"  </td>  
-            <td> <input type="text" class="form-control" id="prenom" value="{{ person.prenom }}" </td>
-            <td>  <input type="text" class="form-control" id="ville" value="{{ person.ville }}" </td>
-            <td> <input type="text" class="form-control" id="age" value ="{{ person.age }}" </td>
-            <td>  <input type="date" class="form-control" id="date_naissance" value="{{ person.getDateNaissance()|date('Y-m-d') }}" </td>
-        
+            <TH>Nom </TH>
+            <TH>Prénom </TH>
+            <TH>Ville</TH>
+            <TH>Age</TH>
+            <TH>Date de naissance</TH>
         </tr>
-</table>   
-        <div class="text-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="/persons"><button type="button" class="btn btn-primary btn">All users</button></a>
 
-        </div>
-    </form>
 
+            <tr>
+                <td> <input type="text" class="form-control" id="nom" value="{{ person.nom }}" name="nom" </td>  
+                <td> <input type="text" class="form-control" id="prenom" value="{{ person.prenom }}" name="prenom"</td>
+                <td>  <input type="text" class="form-control" id="ville" value="{{ person.ville }}" name="ville"</td>
+                <td> <input type="text" class="form-control" id="age" value ="{{ person.age }}" name="age"</td>
+                <td>  <input type="date" class="form-control" id="date_naissance" value="{{ person.getDateNaissance()|date('Y-m-d') }}" name="date_naissance"</td>
+            
+            </tr>
+            <div class="w-75 mx-auto">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        
+            <a href="/persons"><button type="button" class="btn btn-primary btn">All users</button></a>
+            </div> 
+    </table> 
+</form>
 {% endblock %}

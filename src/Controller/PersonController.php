@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class PersonController extends AbstractController
 {
@@ -23,11 +25,11 @@ class PersonController extends AbstractController
     public function createPerson(EntityManagerInterface $entityManager): Response 
     {
         $person = new Person();
-        $person->setNom('Hamiche');
-        $person->setPrenom('Nadia');
+        $person->setNom('Mabrouk');
+        $person->setPrenom('Mustapha');
         $person->setVille('Marseille');
-        $person->setAge('43');
-        $person->setDateNaissance(new \DateTime('1980-05-05'));
+        $person->setAge('37');
+        $person->setDateNaissance(new \DateTime('1986-07-23'));
 
         $entityManager->persist($person);
 
@@ -61,22 +63,43 @@ class PersonController extends AbstractController
     }
 
     #[Route('/person/{id}/edit', name: 'person_edit')]
-    public function edit(int $id, PersonRepository $personRepository)
+    public function edit(int $id, PersonRepository $personRepository, EntityManagerInterface $entityManager)
         {
-        $person = $personRepository->find($id);
-        //var_dump($personne);
+        $person = $entityManager->getRepository(Person::class)->find($id);
 
         return $this->render('person/edit.html.twig', [
             'person' => $person,
         ]);
-      }
+    }
 
-    #[Route('/personne/{id}/delete', name: 'person_delete')]
-        public function delete(Request $request, Person $person, PersonRepository
-        $personRepository): Response
+    #[Route('/person/{id}/edit/request', name: 'person_edit_request')]
+    public function editRequest(int $id, PersonRepository $personRepository, EntityManagerInterface $entityManager)
         {
-        $personRepository->remove($person, true);
-        return $this->redirectToRoute('app_personnes', [], Response::HTTP_SEE_OTHER);
+        $person = $entityManager->getRepository(Person::class)->find($id);
+
+        $person->setNom($_POST['nom']);
+        $person->setPrenom($_POST['prenom']);
+        $person->setVille($_POST['ville']);
+        $person->setAge($_POST['age']);
+        $person->setDateNaissance(new \DateTime($_POST['date_naissance']));
+
+        $entityManager->persist($person);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_all_persons', [], Response::HTTP_SEE_OTHER);
+
+    }
+
+    #[Route('/person/{id}/delete', name: 'person_delete')]
+        public function delete(Request $request, Person $person, EntityManagerInterface $entityManager): Response
+        {
+
+            $entityManager->remove($person);
+            $entityManager->flush();
+       
+    
+        return $this->redirectToRoute('app_all_persons', [], Response::HTTP_SEE_OTHER);
         }
 
 
