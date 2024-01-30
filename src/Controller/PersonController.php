@@ -23,9 +23,11 @@ class PersonController extends AbstractController
     public function createPerson(EntityManagerInterface $entityManager): Response 
     {
         $person = new Person();
-        $person->setNom('Leung');
-        $person->setPrenom('Thierry');
+        $person->setNom('Hamiche');
+        $person->setPrenom('Nadia');
         $person->setVille('Marseille');
+        $person->setAge('43');
+        $person->setDateNaissance(new \DateTime('1980-05-05'));
 
         $entityManager->persist($person);
 
@@ -43,20 +45,41 @@ class PersonController extends AbstractController
         ]);
     }
     
-    // #[Route('/person/{id}', name: 'person_show', methods :['GET'])]
-    // public function show2(PersonRepository $personRepository): Response 
-    // {
-    //     $person = $personRepository
-    //     ->find($id);
+    #[Route('/person/{id}', name: 'person_show')]
+    public function show2(int $id, EntityManagerInterface $entityManager): Response 
+    {
+        $person = $entityManager->getRepository(Person::class)->find($id);
 
-    //     if (!$person) {
-    //         throw $this->createNotFoundException(
+        if (!$person) {
+            throw $this->createNotFoundException(
+                'No person found for id '.$id
+            );
+        }
+        return $this->render('person/show.html.twig', [
+            'person' => $person,
+        ]);
+    }
 
-    //         );
-    //     }
-    //     return $this->render('person/all_persons.html.twig', [
-    //         'persons' => $personRepository->findAll(),
-    //     ]);
-    // }
+    #[Route('/person/{id}/edit', name: 'person_edit')]
+    public function edit(int $id, PersonRepository $personRepository)
+        {
+        $person = $personRepository->find($id);
+        //var_dump($personne);
+
+        return $this->render('person/edit.html.twig', [
+            'person' => $person,
+        ]);
+      }
+
+    #[Route('/personne/{id}/delete', name: 'person_delete')]
+        public function delete(Request $request, Person $person, PersonRepository
+        $personRepository): Response
+        {
+        $personRepository->remove($person, true);
+        return $this->redirectToRoute('app_personnes', [], Response::HTTP_SEE_OTHER);
+        }
+
+
+
 }
 

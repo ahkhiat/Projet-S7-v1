@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Person Edit{% endblock %}
+
+{% block body %}
+
+<h1>Fiche personnelle EDIT</h1>
+
+
+<table class="table w-75 mx-auto table-bordered">
+    <tr>
+        <TH>Nom </TH>
+        <TH>Prénom </TH>
+        <TH>Ville</TH>
+        <TH>Age</TH>
+        <TH>Date de naissance</TH>
+    </tr>
+
+
+    <form>
+        <tr>
+            <td> <input type="text" class="form-control" id="nom" value="{{ person.nom }}"  </td>  
+            <td> <input type="text" class="form-control" id="prenom" value="{{ person.prenom }}" </td>
+            <td>  <input type="text" class="form-control" id="ville" value="{{ person.ville }}" </td>
+            <td> <input type="text" class="form-control" id="age" value ="{{ person.age }}" </td>
+            <td>  <input type="date" class="form-control" id="date_naissance" value="{{ person.getDateNaissance()|date('Y-m-d') }}" </td>
+        
+        </tr>
+</table>   
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/persons"><button type="button" class="btn btn-primary btn">All users</button></a>
+
+        </div>
+    </form>
+
+{% endblock %}
