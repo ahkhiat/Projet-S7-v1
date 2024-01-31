@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<h1> Add User </h1>
+
+    {{ form_start(form) }}
+    <div class="w-50 mx-auto">
+    {{ form_label(form.prenom) }}
+    {{ form_widget(form.prenom) }}
+
+    {{ form_label(form.nom) }}
+    {{ form_widget(form.nom) }}
+
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+
+    {{ form_rest(form) }}
+        <button type="submit">Enregistrer</button>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}

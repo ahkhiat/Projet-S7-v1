@@ -63,9 +63,9 @@ class PersonController extends AbstractController
     }
 
     #[Route('/person/{id}/edit', name: 'person_edit')]
-    public function edit(int $id, PersonRepository $personRepository, EntityManagerInterface $entityManager)
+    public function edit(int $id, PersonRepository $personRepository)
         {
-        $person = $entityManager->getRepository(Person::class)->find($id);
+        $person = $personRepository->find($id);
 
         return $this->render('person/edit.html.twig', [
             'person' => $person,
@@ -89,6 +89,31 @@ class PersonController extends AbstractController
 
         return $this->redirectToRoute('app_all_persons', [], Response::HTTP_SEE_OTHER);
 
+    }
+
+    #[Route('/persons/add_person', name: 'add_person')]
+    public function add_person(): Response
+    {
+        return $this->render('person/add_person.html.twig', [
+        ]);
+    }
+
+    #[Route('/persons/add_person_request', name: 'add_person_request')]
+    public function add_person_request(EntityManagerInterface $entityManager) : Response
+    {
+        $person = new Person();
+
+        $person->setNom($_POST['nom']);
+        $person->setPrenom($_POST['prenom']);
+        $person->setVille($_POST['ville']);
+        $person->setAge($_POST['age']);
+        $person->setDateNaissance(new \DateTime($_POST['date_naissance']));
+
+        $entityManager->persist($person);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_all_persons', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/person/{id}/delete', name: 'person_delete')]

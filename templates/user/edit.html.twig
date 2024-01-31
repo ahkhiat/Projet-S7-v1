@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+<h1> Edit utilisateur </h1>
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    <div class="w-50 mx-auto">
+    {{ form_widget(form) }}
+
+        <button class="btn">{{ ' Update' }}</button>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
