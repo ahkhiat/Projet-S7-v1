@@ -41,7 +41,7 @@ class PersonController extends AbstractController
     #[Route('/persons', name: 'app_all_persons', methods :['GET'])]
     public function all_persons(PersonRepository $personRepository): Response 
     {
-        
+
         return $this->render('person/all_persons.html.twig', [
             'persons' => $personRepository->findAll(),
         ]);

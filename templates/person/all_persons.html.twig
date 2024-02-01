@@ -32,14 +32,14 @@
 <td> {{ person.getDateNaissance()|date('Y-m-d') }} </td>
 
 <td>
-<div class="d-flex ">
-<a href="{{ path('person_show', {'id': person.id}) }}"><button type="button" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye-fill"></i></button></a>
+    <div class="d-flex ">
+        <a href="{{ path('person_show', {'id': person.id}) }}"><button type="button" class="btn btn-primary btn-sm mx-1"><i class="bi bi-eye-fill"></i></button></a>
 
-<a href="{{ path('person_edit', {'id': person.id}) }}"><button type="button" class="btn btn-warning btn-sm mx-1"><i class="bi bi-pen-fill"></i></button></a>
+        <a href="{{ path('person_edit', {'id': person.id}) }}"><button type="button" class="btn btn-warning btn-sm mx-1"><i class="bi bi-pen-fill"></i></button></a>
 
-<a href="{{ path('person_delete', {'id': person.id}) }}"><button type="button" class="btn btn-danger btn-sm mx-1"><i class="bi bi-trash-fill"></i></button></a>
+        <a class="delete-href" href="{{ path('person_delete', {'id': person.id}) }}"><button type="button" class="delete-btn btn btn-danger btn-sm mx-1" id="delete_btn" onclick="return confirm('Etes-vous certain ?')"><i class="bi bi-trash-fill"></i></button></a>
 
-</div>
+    </div>
 </td>
 
 </tr>
@@ -51,3 +51,4 @@
 {# {{ path('person_show', {'id' : person.id})}} #}
 
 {% endblock %}
+
